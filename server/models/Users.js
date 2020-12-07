@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const userSchema = mongoose.Schema({
   name: {
@@ -15,6 +17,26 @@ const userSchema = mongoose.Schema({
     minlength: 5
   },
 
+});
+
+userSchema.pre('save', function (next) {
+  let user = this;
+  // isModified([path])
+  // 수정이 발생할 때만 동작
+  if (user.isModified('password')) {
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+      if (err) return next(err);
+
+      bcrypt.hash(user.password, salt, function (err, hash) {
+        // Store hash in your password DB.
+        if (err) return next(err);
+        user.password = hash;
+        next();
+      });
+    });
+  } else {
+    next();
+  }
 });
 
 

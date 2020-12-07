@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const config = require('./config/key');
 const { User } = require('./models/Users');
 
 const app = express();
@@ -8,9 +9,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // DB 연결
-const mongoURI = 'mongodb+srv://taeyeon:aksemr123@boilerplate.o8zxo.mongodb.net/BoilerPlate?retryWrites=true&w=majority';
 const mongoose = require('mongoose');
-mongoose.connect(mongoURI, {
+mongoose.connect(config.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
