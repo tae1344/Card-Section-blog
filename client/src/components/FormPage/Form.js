@@ -19,8 +19,8 @@ function Form() {
 
       setUser(location.state.user);
     }
-
-  }, []);
+    return () => setUser("");
+  }, []); // 언마운트 될때만 cleanup 실행
 
   console.log("location :::", location.state);
   console.log("user :::", user);

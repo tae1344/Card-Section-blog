@@ -14,13 +14,12 @@ function Navigation() {
   const location = useLocation();
   const [user, setUser] = useState("");
 
-  console.log('navi::', location.state);
 
   useEffect(() => {
 
     if (location.state !== undefined) {
 
-      setUser(location.state.user);
+      setUser(location.state.userData);
     }
   });
 

@@ -5,6 +5,7 @@ const config = require('./config/key');
 const session = require('express-session');
 const cors = require('cors');
 const flash = require('connect-flash');
+const cookieSession = require('cookie-session');
 
 const passport = require('passport');
 const initializePassport = require('./config/passport-config');
@@ -17,6 +18,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
   origin: "http://localhost:3000", //연결 할 client 주소
   credentials: true
+}));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
 }));
 app.use(session({
   secret: 'zxcasdqwe!@#$',

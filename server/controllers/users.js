@@ -18,33 +18,34 @@ const register = async (req, res) => {
   }
 }
 
-const login = passport.authenticate('local', {
-  successRedirect: 'loginSuccess',
-  failureRedirect: 'loginFail',
-  failureFlash: true
-});
+// const login = passport.authenticate('local', {
+//   successRedirect: 'loginSuccess',
+//   failureRedirect: 'loginFail',
+//   failureFlash: true
+// });
 
 // 로그인
-// const login = (req, res, next) => {
+const login = (req, res, next) => {
+  // Custom Passport Callback으로 작성 --> 리액트에서 호환시키기 위함
+  passport.authenticate("local-login", (err, user, info) => {
+    if (err) throw err;
+    if (!user) {
+      return res.send({
+        message: "No User Exists",
+        isLogin: false
+      });
+    }
 
-//   passport.authenticate("local", (err, user, info) => {
-//     if (err) throw err;
-//     if (!user) res.send({
-//       message: "No User Exists",
-//       isLogin: false
-//     });
-//     else {
-//       req.logIn(user, (err) => {
-//         if (err) throw err;
-//         res.send({
-//           message: "Successfully Authenticated",
-//           user: req.user,
-//           isLogin: true
-//         });
-//       });
-//     }
-//   })(req, res, next);
-// }
+    req.logIn(user, function (err) {
+      if (err) {
+        return res.status(400).json({ message: err });
+      }
+      // 로그인이 성공적이기 때문에, isAuthenticated: true 해줘 인증 여부 체크하도록 Client에 넘겨줌!!
+      return res.json({ id: user.id, name: user.name, email: user.email, isAuthenticated: true });
+    });
+
+  })(req, res, next);
+}
 
 
 

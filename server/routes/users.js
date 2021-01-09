@@ -15,14 +15,14 @@ router.get('/register', checkNotAuthenticated);
 router.post('/register', checkNotAuthenticated, register);
 
 
-router.get('/loginSuccess', (req, res) => {
-        res.send({ auth: true, userName: req.user.name })
-        //res.cookie('authentication', req.session.passport).send({ auth: true, userName: req.user.name });
-});
-router.get('/loginFail', (req, res) => {
-        res.send({ auth: false });
-});
-router.post('/login', checkNotAuthenticated, login);
+// router.get('/loginSuccess', (req, res) => {
+//         res.send({ auth: true, userName: req.user.name })
+
+// });
+// router.get('/loginFail', (req, res) => {
+//         res.send({ auth: false });
+// });
+router.post('/login', login);
 
 router.get('/logout', logout);
 //router.get('/user', (req, res) => res.send(req.user));

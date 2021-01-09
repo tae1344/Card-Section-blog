@@ -5,7 +5,7 @@ const { User } = require('../models/Users');
 function initialize(passport) {
   //세션 관리
   passport.serializeUser(function (user, done) { // Strategy 성공 시 딱 한번 호출됨
-    console.log('serializeUser', user.id);
+    console.log('serializeUser', user);
     done(null, user.id); // 여기의 user가 deserializeUser의 첫 번째 매개변수로 이동
   });
 
@@ -17,12 +17,11 @@ function initialize(passport) {
   });
 
   //LocalStrategy
-  passport.use('local', new LocalStrategy({
+  passport.use('local-login', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
   },
     async (email, password, done) => {
-      console.log('LocalStrategy :', email, password);
 
       User.findOne({ email: email }, (err, user) => {
         if (err) return done(err);
@@ -33,10 +32,8 @@ function initialize(passport) {
         try {
           user.comparePassword(password, (err, isMatch) => {
             if (!isMatch) {
-              //console.log('isMatch Fail');
               return done(null, false, { message: 'Password incorrect' });
             } else {
-              //console.log('isMatch Success');
               return done(null, user); //serializeUser 첫 번째 인자로 넘어감
             }
           });
