@@ -14,6 +14,33 @@ export const createPost = async (postData) => {
   }
 }
 
+// post 가져오기
+export const getPosts = async () => {
+  try {
+    return await axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:5000/api/posts",
+    });
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+// 유저가 작성한 포스트 가져오기
+export const getUserPosts = async (user) => {
+  try {
+    return await axios({
+      method: "GET",
+      withCredentials: true,
+      url: `http://localhost:5000/api/posts/${user}/detail`,
+    });
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const deletePost = async (id) => {
   try {
     await axios({

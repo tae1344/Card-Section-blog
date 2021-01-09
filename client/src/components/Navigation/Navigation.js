@@ -1,44 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 
 import { makeStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
-import IconButton from '@material-ui/core/IconButton';
-import { Container, AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginBottom: '100px'
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  appBar: {
-    display: 'flex',
-  },
 
-}));
 
 function Navigation() {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("");
 
-  //console.log(location.state);
+  console.log('navi::', location.state);
 
   useEffect(() => {
+
     if (location.state !== undefined) {
 
       setUser(location.state.user);
     }
-  })
+  });
+
+  const handleDetailPage = (e) => {
+    e.preventDefault();
+    history.push('/detail', { user: user });
+  }
+
 
   const handlerForm = (e) => {
     e.preventDefault();
@@ -68,10 +58,18 @@ function Navigation() {
       <AppBar className={classes.appBar} position="fixed">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            {user !== null ? `Hello~ ${user.name}` : "상단 네비게이션!"}
+            {user ? `Hello~ ${user.name}` : "상단 네비게이션!"}
           </Typography>
-          {user !== null ? <><Button color="inherit" onClick={handlerLogout}>Log out</Button> <Button color="inherit" onClick={handlerForm}>글 작성</Button></>
-            : <><Button color="inherit" href="/login">Login</Button><Button color="inherit" href="/register">Register</Button></>
+          {user ? <>
+            <Button color="inherit" onClick={handleDetailPage}>Profile</Button>
+            <Button color="inherit" onClick={handlerForm}>글 작성</Button>
+            <Button color="inherit" onClick={handlerLogout}>Log out</Button>
+          </>
+            : <>
+              <Button color="inherit" onClick={handlerForm}>글 작성</Button>
+              <Button color="inherit" href="/login">Login</Button>
+              <Button color="inherit" href="/register">Register</Button>
+            </>
           }
         </Toolbar>
       </AppBar>
@@ -80,5 +78,22 @@ function Navigation() {
 
   )
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginBottom: '100px'
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  appBar: {
+    display: 'flex',
+  },
+
+}));
 
 export default Navigation

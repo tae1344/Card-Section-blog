@@ -12,6 +12,8 @@
 
 3. 로그인 구현 - passport 라이브러리
 
+- successRedirect, failureRedirect 경로 문제로 인한 오류...
+
 4. client단 페이지 이동 - react-route-dom
 
 - useHistory : history.push(url, {some state})

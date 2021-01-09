@@ -2,9 +2,24 @@
 const mongoose = require('mongoose');
 const PostMessage = require('../models/PostMessage'); // postMessage DB
 
+// 모든 포스트 가져오기
 const getPosts = async (req, res) => {
   try {
     const postMessages = await PostMessage.find();
+
+
+    res.status(200).json(postMessages);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+}
+
+// 유저가 작성한 포스트만 가져오기
+const getUserPosts = async (req, res) => {
+  const { user } = req.params;
+
+  try {
+    const postMessages = await PostMessage.find({ "creator": user });
 
 
     res.status(200).json(postMessages);
@@ -61,4 +76,4 @@ const likePost = async (req, res) => {
   res.json(updatePost);
 }
 
-module.exports = { getPosts, createPost, updatePost, deletePost, likePost };
+module.exports = { getPosts, createPost, updatePost, deletePost, likePost, getUserPosts };

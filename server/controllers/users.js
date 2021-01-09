@@ -18,26 +18,33 @@ const register = async (req, res) => {
   }
 }
 
+const login = passport.authenticate('local', {
+  successRedirect: 'loginSuccess',
+  failureRedirect: 'loginFail',
+  failureFlash: true
+});
+
 // 로그인
-const login = (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) throw err;
-    if (!user) res.send({
-      message: "No User Exists",
-      isLogin: false
-    });
-    else {
-      req.logIn(user, (err) => {
-        if (err) throw err;
-        res.send({
-          message: "Successfully Authenticated",
-          user: req.user,
-          isLogin: true
-        });
-      });
-    }
-  })(req, res, next);
-}
+// const login = (req, res, next) => {
+
+//   passport.authenticate("local", (err, user, info) => {
+//     if (err) throw err;
+//     if (!user) res.send({
+//       message: "No User Exists",
+//       isLogin: false
+//     });
+//     else {
+//       req.logIn(user, (err) => {
+//         if (err) throw err;
+//         res.send({
+//           message: "Successfully Authenticated",
+//           user: req.user,
+//           isLogin: true
+//         });
+//       });
+//     }
+//   })(req, res, next);
+// }
 
 
 

@@ -33,10 +33,10 @@ function initialize(passport) {
         try {
           user.comparePassword(password, (err, isMatch) => {
             if (!isMatch) {
-              console.log('isMatch Fail');
+              //console.log('isMatch Fail');
               return done(null, false, { message: 'Password incorrect' });
             } else {
-              console.log('isMatch Success');
+              //console.log('isMatch Success');
               return done(null, user); //serializeUser 첫 번째 인자로 넘어감
             }
           });

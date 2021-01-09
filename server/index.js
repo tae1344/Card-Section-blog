@@ -11,14 +11,18 @@ const initializePassport = require('./config/passport-config');
 
 const app = express();
 
-app.use(cookieParser());
+app.use(cookieParser('zxcasdqwe!@#$'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
   origin: "http://localhost:3000", //연결 할 client 주소
   credentials: true
 }));
-app.use(session({ secret: 'asadlfkjg', resave: false, saveUninitialized: false })); // 세션 활성화
+app.use(session({
+  secret: 'zxcasdqwe!@#$',
+  resave: false,
+  saveUninitialized: false,
+})); // 세션 활성화
 
 app.use(flash());
 app.use(passport.initialize()); // passport 구동

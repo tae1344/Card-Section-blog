@@ -12,7 +12,7 @@ function LoginPage() {
   const classes = useStyles();
 
   const [loginData, setLoginData] = useState({ email: '', password: '' });
-  const [isLogin, setIsLogin] = useState();
+  const [isAuth, setIsAuth] = useState();
   const [userData, setUserData] = useState();
 
   const history = useHistory();
@@ -21,9 +21,8 @@ function LoginPage() {
   // useState에서 변경 된 state는 바로 적용이 안되기에,
   // 비동기적으로 작동하는 것을 effect를 사용해 적용시켜준다.
   useEffect(() => {
-
-    isLogin ? history.push('/', { user: userData }) : history.push('/login');
-  }, [isLogin]);
+    isAuth ? history.push('/', { auth: true, user: userData }) : history.push('/login');
+  }, [isAuth]);
 
   const handlerLogin = async (e) => {
     e.preventDefault();
@@ -33,9 +32,9 @@ function LoginPage() {
       withCredentials: true,
       url: "http://localhost:5000/api/users/login",
     }).then((res) => {
-      console.log(res.data);
-      setUserData(res.data.user);
-      setIsLogin(res.data.isLogin);
+      console.log('login auth data ::::', res.data);
+      setUserData(res.data.userName);
+      setIsAuth(res.data.auth);
     });
   };
 
