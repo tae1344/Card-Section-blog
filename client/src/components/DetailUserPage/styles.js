@@ -5,10 +5,41 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
-  smMargin: {
-    margin: theme.spacing(1),
+  appBar: {
+    display: 'flex',
+    backgroundColor: '#fff',
+    color: 'black',
+    flexDirection: 'row',
+    alignContent: 'space-between'
   },
-  actionDiv: {
-    textAlign: 'center',
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  heroContent: {
+    marginTop: theme.spacing(4),
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6),
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4),
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6),
   },
 }));

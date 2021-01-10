@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Button, Typography, CardActions } from '@material-ui/core';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,8 +9,15 @@ import moment from 'moment'; // JS 시간 라이브러리(moment.js)
 import * as api from '../../../api/index';
 import useStyles from './styles';
 
-export default function Post({ post }) {
+export default function Post({ post, check }) {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handlerUpdate = (e) => {
+    e.preventDefault();
+    history.push('/form', { mode: 'update', postData: post });
+
+  }
 
   const handlerLike = (e) => {
     e.preventDefault();
@@ -46,10 +54,19 @@ export default function Post({ post }) {
           &nbsp; Like &nbsp;
           {post.likeCount}
         </Button>
-        <Button size="small" color="primary" onClick={handlerDelete}>
-          <DeleteIcon fontSize="small" />
+
+        {check ? null : (
+          <>
+            <Button size="small" color="primary" onClick={handlerUpdate}>
+              Update
+            </Button>
+            <Button size="small" color="primary" onClick={handlerDelete}>
+              <DeleteIcon fontSize="small" />
           Delete
         </Button>
+          </>
+        )
+        }
       </CardActions>
     </Card>
   )

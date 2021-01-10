@@ -10,8 +10,8 @@ import DetailUserPage from './components/DetailUserPage/DetailUser';
 import PrivateRoute from './hoc/PrivateRoute';
 
 
-function App({ location }) {
-  console.log(location);
+function App() {
+
   return (
     <div className="App">
       <BrowserRouter>

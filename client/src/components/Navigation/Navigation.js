@@ -1,37 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Container } from '@material-ui/core';
 
+import './Navigation.css';
 
-
-function Navigation() {
+function Navigation({ userName }) {
   const classes = useStyles();
   const history = useHistory();
-  const location = useLocation();
-  const [user, setUser] = useState("");
-
-
-  useEffect(() => {
-
-    if (location.state !== undefined) {
-
-      setUser(location.state.userData);
-    }
-  });
+  const isAuthenticated = window.localStorage.getItem('isAuthenticated');
 
   const handleDetailPage = (e) => {
     e.preventDefault();
-    history.push('/detail', { user: user });
+    history.push('/detail', { user: userName });
   }
-
 
   const handlerForm = (e) => {
     e.preventDefault();
-    history.push('/form', { user: user });
+    history.push('/form', { mode: 'write' });
   }
 
   const handlerLogout = (e) => {
@@ -42,11 +30,13 @@ function Navigation() {
       url: "http://localhost:5000/api/users/logout",
     }).then((res) => {
       if (res.status === 200) {
-        console.log(res);
-        alert('Log Out Success');
-        history.push('/', { user: null });
+        window.localStorage.removeItem('isAuthenticated'); // 로컬 스토리지 인증정보 삭제
+        window.localStorage.removeItem('userName');
+        alert('Successed Logout!');
+        history.push('/');
       } else {
-        alert('Log Out Failed');
+        alert('Failed Logout');
+
       }
     });
   };
@@ -55,22 +45,25 @@ function Navigation() {
 
     <div className={classes.root}>
       <AppBar className={classes.appBar} position="fixed">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            {user ? `Hello~ ${user.name}` : "상단 네비게이션!"}
-          </Typography>
-          {user ? <>
-            <Button color="inherit" onClick={handleDetailPage}>Profile</Button>
-            <Button color="inherit" onClick={handlerForm}>글 작성</Button>
-            <Button color="inherit" onClick={handlerLogout}>Log out</Button>
-          </>
-            : <>
-              <Button color="inherit" onClick={handlerForm}>글 작성</Button>
-              <Button color="inherit" href="/login">Login</Button>
-              <Button color="inherit" href="/register">Register</Button>
+        <Container maxWidth="md">
+          <Toolbar>
+            <a className="menu_link" href="/"><img className="menu_icon" src='/images/instagram.png' ></img></a>
+            <Typography variant="h4" className={classes.title}>
+              {isAuthenticated ? `Hello~ ${userName}` : "Cardgram"}
+            </Typography>
+            {isAuthenticated ? <>
+              <button color="inherit" onClick={handlerForm}><img className="menu_right_icon" src='/images/upload.png'></img></button>
+              <button color="inherit" onClick={handleDetailPage}><img className="menu_right_icon" src='/images/profile.png'></img></button>
+              <button color="inherit" onClick={handlerLogout}><img className="menu_right_icon" src='/images/exit.png'></img></button>
             </>
-          }
-        </Toolbar>
+              : <>
+                <button color="inherit" onClick={handlerForm}><img className="menu_right_icon" src='/images/upload.png'></img></button>
+                <a color="inherit" href="/login"><img className="menu_right_icon" src='/images/user.png'></img></a>
+                {/* <a color="inherit" href="/register">Register</a> */}
+              </>
+            }
+          </Toolbar>
+        </Container>
       </AppBar>
     </div>
 
@@ -81,7 +74,7 @@ function Navigation() {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: '100px'
+    marginBottom: '100px',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -91,7 +84,11 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     display: 'flex',
+    backgroundColor: '#fff',
+    color: 'black'
+
   },
+
 
 }));
 

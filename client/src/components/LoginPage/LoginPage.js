@@ -28,8 +28,9 @@ function LoginPage() {
       //****     서버에서 받아 온 인증여부를 로컬 스토리지에 저장 --> 모든 페이지에서 사용가능해서 편리한 듯하다.       ******/
       const isAuthenticated = res.data.isAuthenticated;
       window.localStorage.setItem('isAuthenticated', isAuthenticated);
+      window.localStorage.setItem('userName', res.data.name);
 
-      history.push('/', { userData: res.data });
+      history.push('/', { user: res.data });
     });
   };
 

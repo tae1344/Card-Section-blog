@@ -4,31 +4,39 @@ import { TextField, Button, Container, Paper, Typography } from '@material-ui/co
 import axios from 'axios';
 import FileBase from 'react-file-base64';
 
+import * as api from '../../api/index';
 import useStyles from './styles';
 
 function Form() {
+  const classes = useStyles();
+  const userName = window.localStorage.getItem('userName');
+
   const location = useLocation();
   const history = useHistory();
-  const [user, setUser] = useState("");
-  const classes = useStyles();
-  const [postData, setpostData] = useState({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
+
+  const [writeMode, setWriteMode] = useState("");
+  const [postData, setpostData] = useState({ creator: userName, title: '', message: '', tags: '', selectedFile: '' });
 
   //로그인 유저 상태 확인
   useEffect(() => {
     if (location.state !== undefined) {
 
-      setUser(location.state.user);
-    }
-    return () => setUser("");
-  }, []); // 언마운트 될때만 cleanup 실행
+      if (location.state.mode) {
+        setWriteMode(location.state.mode);
+      }
 
-  console.log("location :::", location.state);
-  console.log("user :::", user);
+      if (location.state.postData) {
+        setpostData(location.state.postData);
+      }
+    }
+
+  }, []);
+
+  console.log(postData);
 
   // Create Post
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     await axios({
       method: "POST",
       data: postData,
@@ -36,24 +44,29 @@ function Form() {
       url: "http://localhost:5000/api/posts/create",
     }).then((res) => console.log('postData ::', res.data));
 
+
     clear();
     history.push('/');
 
+  }
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    await api.updatePost(postData._id, postData);
+
+    history.goBack();
   }
 
   const clear = () => {
     setpostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
   }
 
-  //encType='multipart/form-data' 설정해줘야 multer 인식한다고 한다.
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper}>
-        <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit} encType='multipart/form-data'>
-          {/* <Typography variant="h6">{user.name}님 반갑습니다.</Typography> */}
-          <Typography variant="body2">카드를 작성해주세요...</Typography>
-          {/* <TextField name="creator" variant="outlined" label="Creator" fullWidth value={postData.creator} onChange={(e) => setpostData({ ...postData, creator: e.target.value })} /> */}
-          <TextField name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setpostData({ ...postData, title: e.target.value, creator: user.name })} />
+        <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={writeMode === 'update' ? handleUpdate : handleSubmit} encType='multipart/form-data'>
+          <Typography variant="h6">{writeMode === 'update' ? '카드 수정 중..' : 'Creating'}</Typography>
+          <TextField name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setpostData({ ...postData, title: e.target.value })} />
           <TextField name="message" variant="outlined" label="Message" fullWidth value={postData.message} onChange={(e) => setpostData({ ...postData, message: e.target.value })} />
           <TextField name="tagstitle" variant="outlined" label="Tags" fullWidth value={postData.tags} onChange={(e) => setpostData({ ...postData, tags: e.target.value.split(',') })} />
           <div className={classes.fileInput}>

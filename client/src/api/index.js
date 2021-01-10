@@ -66,3 +66,15 @@ export const likePost = async (id) => {
   }
 }
 
+export const updatePost = async (id, updatedPost) => {
+  try {
+    await axios({
+      method: 'PATCH',
+      data: updatedPost,
+      withCredentials: true,
+      url: `http://localhost:5000/api/posts/${id}`,
+    }).then((res) => console.log('updtaed ::', res.data));
+  } catch (error) {
+    console.log(error);
+  }
+}

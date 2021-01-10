@@ -27,3 +27,12 @@
 6. react-file-base64
 
 - 64비트 이진 데이터로 이미지를 DB에 저장하기 위해 사용. multer를 이용했었지만 DB에 저장하고 불러오는 것을 구현하는 것이 까다로워 선택했다.
+
+7. Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+
+- https://developers.google.com/web/updates/2017/09/abortable-fetch
+
+8. 시간차 렌더링을 위해 Suspense 컴포넌트가 리액트에서 지원되지만, 아직 실험단계라 따로 Timeout을 줘 구현했다.
+9. Access to XMLHttpRequest at '서버URL 주소' from origin 'Client주소' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+-

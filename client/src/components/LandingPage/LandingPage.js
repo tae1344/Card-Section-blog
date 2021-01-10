@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from '../Navigation/Navigation';
-import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
-import Form from '../FormPage/Form';
+import { Container, Grid } from '@material-ui/core';
+
 import Posts from '../Posts/Posts';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,15 +13,16 @@ const useStyles = makeStyles((theme) => ({
 
 function LandingPage() {
   const classes = useStyles();
+  const userName = window.localStorage.getItem('userName');
 
   return (
     <div>
       <header>
-        <Navigation />
+        <Navigation userName={userName} />
 
       </header>
       <main>
-        <Container >
+        <Container maxWidth="md" >
           <Grid container justify="space-between" alignItems="stretch" spacing={3}>
             <Grid item xs={12} >
               <Posts />

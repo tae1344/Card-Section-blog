@@ -5,9 +5,9 @@ import { Route, Redirect } from "react-router-dom";
 
 
 function PrivateRoute({ component: Component, ...rest }) {
-
+  const isAuthenticated = window.localStorage.getItem('isAuthenticated');
   return (
-    <Route {...rest} render={(props) => window.localStorage.getItem('isAuthenticated') ? (
+    <Route {...rest} render={(props) => isAuthenticated ? (
       <Component {...props} />
     ) : (
         <Redirect to={{
