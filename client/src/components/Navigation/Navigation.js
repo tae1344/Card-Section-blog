@@ -47,18 +47,18 @@ function Navigation({ userName }) {
       <AppBar className={classes.appBar} position="fixed">
         <Container maxWidth="md">
           <Toolbar>
-            <a className="menu_link" href="/"><img className="menu_icon" src='/images/instagram.png' ></img></a>
+            <a className="menu_link" href="/"><img className="menu_icon" src='/images/instagram.png' alt="logo" ></img></a>
             <Typography variant="h4" className={classes.title}>
-              {isAuthenticated ? `Hello~ ${userName}` : "Cardgram"}
+              {isAuthenticated ? <Typography>{userName} 님 반가워요!</Typography> : "Cardgram"}
             </Typography>
             {isAuthenticated ? <>
-              <button color="inherit" onClick={handlerForm}><img className="menu_right_icon" src='/images/upload.png'></img></button>
-              <button color="inherit" onClick={handleDetailPage}><img className="menu_right_icon" src='/images/profile.png'></img></button>
-              <button color="inherit" onClick={handlerLogout}><img className="menu_right_icon" src='/images/exit.png'></img></button>
+              <button color="inherit" onClick={handlerForm}><img className="menu_right_icon" src='/images/upload.png' alt="upload"></img></button>
+              <button color="inherit" onClick={handleDetailPage}><img className="menu_right_icon" src='/images/profile.png' alt="profile"></img></button>
+              <button color="inherit" onClick={handlerLogout}><img className="menu_right_icon" src='/images/exit.png' alt="logout"></img></button>
             </>
               : <>
-                <button color="inherit" onClick={handlerForm}><img className="menu_right_icon" src='/images/upload.png'></img></button>
-                <a color="inherit" href="/login"><img className="menu_right_icon" src='/images/user.png'></img></a>
+                <button color="inherit" onClick={handlerForm}><img className="menu_right_icon" src='/images/upload.png' alt="upload"></img></button>
+                <a color="inherit" href="/login"><img className="menu_right_icon" src='/images/user.png' alt="login"></img></a>
                 {/* <a color="inherit" href="/register">Register</a> */}
               </>
             }

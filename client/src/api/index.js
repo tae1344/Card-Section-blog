@@ -7,8 +7,8 @@ export const createPost = async (postData) => {
       method: "POST",
       data: postData,
       withCredentials: true,
-      url: "http://localhost:5000/api/posts",
-    }).then((res) => console.log('postData ::', res.data));
+      url: "http://localhost:5000/api/posts/create",
+    });
   } catch (error) {
     console.log(error);
   }
@@ -47,7 +47,7 @@ export const deletePost = async (id) => {
       method: 'DELETE',
       withCredentials: true,
       url: `http://localhost:5000/api/posts/${id}`,
-    }).then((res) => console.log('Delete ::', res.data));
+    });
   } catch (error) {
     console.log(error);
   }
@@ -60,7 +60,7 @@ export const likePost = async (id) => {
       method: 'PATCH',
       withCredentials: true,
       url: `http://localhost:5000/api/posts/${id}/likePost`,
-    }).then((res) => console.log('like ::', res.data));
+    });
   } catch (error) {
     console.log(error);
   }
@@ -71,9 +71,9 @@ export const updatePost = async (id, updatedPost) => {
     await axios({
       method: 'PATCH',
       data: updatedPost,
-      withCredentials: true,
+      //withCredentials: true,
       url: `http://localhost:5000/api/posts/${id}`,
-    }).then((res) => console.log('updtaed ::', res.data));
+    });
   } catch (error) {
     console.log(error);
   }

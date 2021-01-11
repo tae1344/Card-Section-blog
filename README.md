@@ -36,3 +36,10 @@
 9. Access to XMLHttpRequest at '서버URL 주소' from origin 'Client주소' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 
 -
+
+10. 노드 서버 PayloadTooLargeError: request entity too large 에러 문제
+
+- app.use(bodyParser.json({limit: '50mb'}));
+  app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+  다음과 같이 limit를 사용해 용량을 설정해주는 방식으로 해결.
+  https://stackoverflow.com/questions/19917401/error-request-entity-too-large

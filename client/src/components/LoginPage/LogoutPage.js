@@ -15,7 +15,7 @@ function LogoutPage() {
       url: "http://localhost:5000/api/users/logout",
     }).then((res) => {
       if (res.status === 200) {
-        console.log(res);
+
         history.push('/', { user: null });
       } else {
         alert('Log Out Failed');

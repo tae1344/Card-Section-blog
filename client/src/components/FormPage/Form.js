@@ -32,18 +32,11 @@ function Form() {
 
   }, []);
 
-  console.log(postData);
 
   // Create Post
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios({
-      method: "POST",
-      data: postData,
-      withCredentials: true,
-      url: "http://localhost:5000/api/posts/create",
-    }).then((res) => console.log('postData ::', res.data));
-
+    await api.createPost(postData);
 
     clear();
     history.push('/');
@@ -52,9 +45,10 @@ function Form() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+
     await api.updatePost(postData._id, postData);
 
-    history.goBack();
+    history.push('/detail', { user: userName });
   }
 
   const clear = () => {

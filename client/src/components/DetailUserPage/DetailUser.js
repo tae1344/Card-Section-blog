@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { makeStyles } from '@material-ui/core/styles';
 import { Grid, CircularProgress, Container, AppBar, Typography, Toolbar, CssBaseline, Button } from '@material-ui/core';
 
 import Post from '../Posts/Post/Post';
@@ -20,16 +19,18 @@ export default function DetailUser() {
   useEffect(() => {
     let mounted = true;
     api.getUserPosts(userName).then((res) => {
-      if (res.data) {
-
+      if (mounted) {
         setMyPosts(res.data);
       }
     });
 
-    // return function cleanup() {
-    //   mounted = false;
-    // }
+    return function cleanup() {
+      mounted = false;
+    }
   }, []);
+
+
+
 
   useEffect(() => {
     if (!myposts.length) {
@@ -54,7 +55,14 @@ export default function DetailUser() {
       )
     } else {
       return (
-        <div>포스트가 없어요</div>
+        <Container maxWidth="sm">
+          <Typography component="h1" variant="h4" align="center" color="textSecondary" gutterBottom>
+            작성한 카드가 없네요..
+            </Typography>
+          <Typography component="h1" variant="h4" align="center" color="textSecondary" gutterBottom>
+            <Button href="/form" variant="outlined" color="secondary">카드 만들러 가기..</Button>
+          </Typography>
+        </Container>
       )
     }
   }
@@ -64,7 +72,7 @@ export default function DetailUser() {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <a className="menu_link" href="/"><img className="menu_icon" src='/images/instagram.png' ></img></a>
+          <a className="menu_link" href="/"><img className="menu_icon" src='/images/instagram.png' alt="logo" ></img></a>
           <Typography variant="h6" color="inherit" noWrap>
             나의 기록
           </Typography>
@@ -73,7 +81,6 @@ export default function DetailUser() {
         <Button href='/'>Home</Button>
       </AppBar>
       <main>
-        {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h4" align="center" color="textPrimary" gutterBottom>
@@ -85,7 +92,8 @@ export default function DetailUser() {
           </Container>
         </div>
         {
-          checkPosts ? <CircularProgress /> : renderPosts()
+          checkPosts ? <Container style={{ position: 'relative' }}><CircularProgress style={{ marginLeft: '50%' }} /></Container>
+            : renderPosts()
 
         }
 
