@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Button, Typography, CardActions } from '@material-ui/core';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import moment from 'moment'; // JS 시간 라이브러리(moment.js)
 
 import * as api from '../../../api/index';
@@ -13,6 +13,14 @@ export default function Post({ post, check, userName }) {
   const classes = useStyles();
   const history = useHistory();
 
+  const [likeCount, setLikeCount] = useState(post.likeCount);
+  const [likeColor, setLikeColor] = useState(false);
+
+
+  const handlePostDetailPage = (e) => {
+    e.preventDefault();
+    history.push(`/postDetail/${post._id}`, { post: post });
+  }
 
 
   const handlerUpdate = (e) => {
@@ -23,7 +31,11 @@ export default function Post({ post, check, userName }) {
 
   const handlerLike = async (e) => {
     e.preventDefault();
-    await api.likePost(post._id);
+    if (!likeColor) {
+      setLikeColor(true);
+      setLikeCount(likeCount + 1);
+      await api.likePost(post._id);
+    }
   }
 
   const handlerDelete = async (e) => {
@@ -36,14 +48,14 @@ export default function Post({ post, check, userName }) {
 
   return (
     <Card className={classes.card}>
-      <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
+      <CardMedia className={classes.media} image={post.selectedFile ? post.selectedFile : '/images/cat.jpg'} title={post.title} />
       <div className={classes.overlay}>
         <Typography variant="h6">{post.creator}</Typography>
         <Typography variant="body2">{moment(post.createAt).fromNow()}</Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: 'white' }} size="small" >
-          <MoreHorizIcon fontSize="default" />
+        <Button style={{ color: 'white' }} size="small" onClick={handlePostDetailPage}>
+          <LaunchRoundedIcon fontSize="default" />
         </Button>
       </div>
       <div className={classes.details}>
@@ -55,9 +67,9 @@ export default function Post({ post, check, userName }) {
       </CardContent>
       <CardActions className={classes.cardActions}>
         <Button size="small" color="primary" onClick={handlerLike}>
-          <ThumbUpAltIcon fontSize="small" />
+          <ThumbUpAltIcon fontSize="small" style={likeColor ? { color: 'red' } : { color: 'inherit' }} />
           &nbsp; Like &nbsp;
-          {post.likeCount}
+          {likeCount}
         </Button>
 
         {check ? null : (

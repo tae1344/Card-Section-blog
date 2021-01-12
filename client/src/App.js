@@ -7,7 +7,9 @@ import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import FormPage from './components/FormPage/Form';
 import DetailUserPage from './components/DetailUserPage/DetailUser';
+import DeatilPostPage from './components/Posts/Post/PostDetail';
 import PrivateRoute from './hoc/PrivateRoute';
+
 
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
           <Route path='/login' component={LoginPage} />
           <Route path='/register' component={RegisterPage} />
           <PrivateRoute path='/detail' component={DetailUserPage} />
+          <Route path='/Postdetail/:postId' component={DeatilPostPage} />
         </Switch>
       </BrowserRouter>
     </div>

@@ -30,7 +30,7 @@ export default makeStyles({
   overlay2: {
     position: 'absolute',
     top: '20px',
-    right: '20px',
+    right: '10px',
     color: 'white',
   },
   grid: {
@@ -49,4 +49,21 @@ export default makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  detailImage: {
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '10%',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    borderRadius: 10
+  },
+  imageBox: {
+    backgroundColor: '#eee'
+
+  },
+  text: {
+    paddingLeft: 20,
+    paddingRight: 20,
+  }
+
 });
