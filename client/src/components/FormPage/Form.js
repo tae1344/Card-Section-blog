@@ -38,7 +38,7 @@ function Form() {
     e.preventDefault();
     await api.createPost(postData);
 
-    clear();
+    alert('카드가 작성되었습니다!');
     history.push('/');
 
   }
@@ -47,7 +47,7 @@ function Form() {
     e.preventDefault();
 
     await api.updatePost(postData._id, postData);
-
+    alert('카드가 업데이트 되었습니다!');
     history.push('/detail', { user: userName });
   }
 

@@ -8,8 +8,8 @@ const router = express.Router();
 
 // localhost:5000/api/posts
 router.get('/', getPosts);
-router.get('/:user/detail', checkAuthenticated, getUserPosts);
-router.post('/create', checkAuthenticated, createPost);
+router.get('/:user/detail', getUserPosts);
+router.post('/create', checkNotAuthenticated, createPost);
 router.patch('/:id', updatePost);
 router.delete('/:id', deletePost);
 router.patch('/:id/likePost', checkNotAuthenticated, likePost);

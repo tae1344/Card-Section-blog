@@ -43,3 +43,17 @@
   app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
   다음과 같이 limit를 사용해 용량을 설정해주는 방식으로 해결.
   https://stackoverflow.com/questions/19917401/error-request-entity-too-large
+
+11. CSP(Content Security Policy) 문제...favicon.ico 이미지를 사용하지 않는데 이런 오류가 떠서 방법을 찾아봄
+
+- 서버를 heroku에 배포한 후, 이런 문제가 발생함..
+- Helmet 패키지를 이용해 보안 설정해준다.(되지 않음)
+- var favicon = require('serve-favicon');
+  var path = require('path');
+  app.use(favicon(path.join(\_\_\_dirname, 'public', 'favicon.ico')));
+  이렇게 하니 경로가 '/app/public/favicon.ico'로 나타나면 파일이 없다고 한다.
+
+- app.get('/favicon.ico', (req, res) => res.sendStatus(204));
+  이렇게 204메세지로 전달하도록 했는데, 처음 상태 에러로 돌아감..하..
+
+12. 몽구스 IP 연결 에러 - IP를 0.0.0.0/0 으로 설정해 어디서든 접근 가능토록 함

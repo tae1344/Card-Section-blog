@@ -5,12 +5,18 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Container } from '@material-ui/core';
 
+import * as api from '../../api/index';
 import './Navigation.css';
 
 function Navigation({ userName }) {
   const classes = useStyles();
   const history = useHistory();
   const isAuthenticated = window.localStorage.getItem('isAuthenticated');
+
+  const handleLoginPage = (e) => {
+    e.preventDefault();
+    history.push('/login');
+  }
 
   const handleDetailPage = (e) => {
     e.preventDefault();
@@ -24,21 +30,18 @@ function Navigation({ userName }) {
 
   const handlerLogout = (e) => {
     e.preventDefault();
-    axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:5000/api/users/logout",
-    }).then((res) => {
-      if (res.status === 200) {
-        window.localStorage.removeItem('isAuthenticated'); // 로컬 스토리지 인증정보 삭제
-        window.localStorage.removeItem('userName');
-        alert('Successed Logout!');
-        history.push('/');
-      } else {
-        alert('Failed Logout');
+    api.usesrLogout()
+      .then((res) => {
+        if (res.status === 200) {
+          window.localStorage.removeItem('isAuthenticated'); // 로컬 스토리지 인증정보 삭제
+          window.localStorage.removeItem('userName');
+          alert('Successed Logout!');
+          history.push('/');
+        } else {
+          alert('Failed Logout');
 
-      }
-    });
+        }
+      });
   };
 
   return (
@@ -58,8 +61,7 @@ function Navigation({ userName }) {
             </>
               : <>
                 <button color="inherit" onClick={handlerForm}><img className="menu_right_icon" src='/images/upload.png' alt="upload"></img></button>
-                <a color="inherit" href="/login"><img className="menu_right_icon" src='/images/user.png' alt="login"></img></a>
-                {/* <a color="inherit" href="/register">Register</a> */}
+                <button color="inherit" onClick={handleLoginPage}><img className="menu_right_icon" src='/images/user.png' alt="login"></img></button>
               </>
             }
           </Toolbar>

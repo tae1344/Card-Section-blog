@@ -6,29 +6,26 @@ import useStyles from './styles';
 import { Avatar, Button, CssBaseline, TextField, Typography, Container } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
+import * as api from '../../api/index';
+
 export default function RegisterPage() {
   const classes = useStyles();
   const [inputData, setInputData] = useState({ name: '', email: '', password: '' });
 
-  const url = 'http://localhost:5000/api/users';
   const history = useHistory();
 
   const handlerRegister = async (e) => {
     e.preventDefault();
-    await axios({
-      method: "POST",
-      data: inputData,
-      withCredentials: true,
-      url: "http://localhost:5000/api/users/register",
-    }).then((res) => {
-      if (res.status === 200) {
-        alert('Register Success!');
-        history.push('/');
-      } else {
-        alert('Register Failed');
-        setInputData({ name: '', email: '', password: '' });
-      }
-    });
+    await api.userResiter(inputData)
+      .then((res) => {
+        if (res.status === 200) {
+          alert('Register Success!');
+          history.push('/');
+        } else {
+          alert('Register Failed');
+          setInputData({ name: '', email: '', password: '' });
+        }
+      });
   };
 
   return (

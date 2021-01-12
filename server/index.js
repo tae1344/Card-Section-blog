@@ -6,25 +6,40 @@ const session = require('express-session');
 const cors = require('cors');
 const flash = require('connect-flash');
 const cookieSession = require('cookie-session');
+const helmet = require("helmet");
+const favicon = require('serve-favicon')
+const path = require('path')
 
 const passport = require('passport');
 const initializePassport = require('./config/passport-config');
 
+const CLIENT = 'https://cardgram.netlify.app';
 const app = express();
+
+app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    ...helmet.contentSecurityPolicy.getDefaultDirectives()
+  }
+}));
+
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 app.use(cookieParser('zxcasdqwe!@#$'));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors({
-  origin: "http://localhost:3000", //연결 할 client 주소
+  origin: `${CLIENT}`, //연결 할 client 주소
   credentials: true,
   method: "GET,HEAD,PUT,PATCH,POST,DELETE",
 }));
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2']
-}));
+// app.use(cookieSession({
+//   name: 'session',
+//   keys: ['key1', 'key2']
+// }));
 app.use(session({
+  name: 'sessionID',
+  keys: ['key1', 'key2'],
   secret: 'zxcasdqwe!@#$',
   resave: false,
   saveUninitialized: false,

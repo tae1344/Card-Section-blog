@@ -14,7 +14,7 @@ const register = async (req, res) => {
       });
     });
   } catch {
-    res.json({ register: false, message: "Register failed" });
+    res.json({ succesee: false, message: "Register failed" });
   }
 }
 
@@ -32,7 +32,7 @@ const login = (req, res, next) => {
     if (!user) {
       return res.send({
         message: "No User Exists",
-        isLogin: false
+        isAuthenticated: false
       });
     }
 

@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const POST_SERVER = 'https://cardgramapp.herokuapp.com/api/posts';
+const USER_SERVER = 'https://cardgramapp.herokuapp.com/api/users';
 
 export const createPost = async (postData) => {
   try {
@@ -7,7 +9,7 @@ export const createPost = async (postData) => {
       method: "POST",
       data: postData,
       withCredentials: true,
-      url: "http://localhost:5000/api/posts/create",
+      url: `${POST_SERVER}/create`,
     });
   } catch (error) {
     console.log(error);
@@ -20,7 +22,7 @@ export const getPosts = async () => {
     return await axios({
       method: "GET",
       withCredentials: true,
-      url: "http://localhost:5000/api/posts",
+      url: `${POST_SERVER}`,
     });
 
   } catch (error) {
@@ -33,7 +35,7 @@ export const getUserPosts = async (user) => {
     return await axios({
       method: "GET",
       withCredentials: true,
-      url: `http://localhost:5000/api/posts/${user}/detail`,
+      url: `${POST_SERVER}/${user}/detail`,
     });
 
   } catch (error) {
@@ -46,7 +48,7 @@ export const deletePost = async (id) => {
     await axios({
       method: 'DELETE',
       withCredentials: true,
-      url: `http://localhost:5000/api/posts/${id}`,
+      url: `${POST_SERVER}/${id}`,
     });
   } catch (error) {
     console.log(error);
@@ -59,7 +61,7 @@ export const likePost = async (id) => {
     await axios({
       method: 'PATCH',
       withCredentials: true,
-      url: `http://localhost:5000/api/posts/${id}/likePost`,
+      url: `${POST_SERVER}/${id}/likePost`,
     });
   } catch (error) {
     console.log(error);
@@ -72,7 +74,45 @@ export const updatePost = async (id, updatedPost) => {
       method: 'PATCH',
       data: updatedPost,
       //withCredentials: true,
-      url: `http://localhost:5000/api/posts/${id}`,
+      url: `${POST_SERVER}/${id}`,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const usesrLogin = async (loginData) => {
+  try {
+    return await axios({
+      method: "POST",
+      data: loginData,
+      withCredentials: true,
+      url: `${USER_SERVER}/login`,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const usesrLogout = async () => {
+  try {
+    return axios({
+      method: "GET",
+      withCredentials: true,
+      url: `${USER_SERVER}/logout`,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const userResiter = async (inputData) => {
+  try {
+    return await axios({
+      method: "POST",
+      data: inputData,
+      withCredentials: true,
+      url: `${USER_SERVER}/register`,
     });
   } catch (error) {
     console.log(error);

@@ -28,7 +28,7 @@ const getUserPosts = async (req, res) => {
   }
 }
 
-const createPost = async (req, res, next) => {
+const createPost = async (req, res) => {
   const post = req.body;
 
   const newPost = new PostMessage(post);
