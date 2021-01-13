@@ -1,3 +1,5 @@
+<p align="center"><img  src="https://user-images.githubusercontent.com/60888056/104448875-139d2380-55e1-11eb-8429-1c73ff246cac.png"/></p>
+
 # Cardgram Web
 
 리액트 공부를 하기 위해 만든 sns처럼 게시물을 만들고, 공유하는 웹 프로젝트입니다. Client는 React를 사용, Server는 Node.js Express를 이용해 구축했습니다.
