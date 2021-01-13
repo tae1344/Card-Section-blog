@@ -1,60 +1,204 @@
-## 1. Register
+# Cardgram Web
 
-1. mongoose 모델 생성 및 연결
+리액트 공부를 하기 위해 만든 sns처럼 게시물을 만들고, 공유하는 웹 프로젝트입니다. Client는 React를 사용, Server는 Node.js Express를 이용해 구축했습니다.
 
-- connect URI config화?
-- Modeling
+---
 
-2. bcrypt로 비밀번호 암호화
+## 목차
 
-- DB 저장 전 암호화 : bcrypt
-- 비밀번호 비교
+- [project](#project-내용)
+- [프로젝트 구성](#프로젝트-구성)
+- [문제점 해결](#문제점-해결)
+- [배운 점](#배운-점)
+- [느낀 점](#느낀-점)
 
-3. 로그인 구현 - passport 라이브러리
+---
 
-- successRedirect, failureRedirect 경로 문제로 인한 오류...
+## Project 내용
 
-4. client단 페이지 이동 - react-route-dom
+#### 개요
 
-- useHistory : history.push(url, {some state})
-- useLocation :
-- withRoute
+리액트 공부를 시작하면서 계획한 웹 프로젝트로, 인스타그램 sns 기능을 스스로 구현해보고 싶어 이 프로젝트를 수행했습니다. Client와 Server 간의 데이터 통신방법, 그 과정에서의 보안적 이슈 문제, Production과 Local 환경에서 개발의 차이점 등 정말 많은 것을 배우고 알게 된 프로젝트입니다.
 
-5. Form
+- Front
 
-- useState의 '비동기적 성질'로 변경된 state가 바로 적용이 안된다. -> 즉, 리 렌더링 되어야 state값 변경이 적용된다. 이것을 Effect를 사용해 해결한다.
+1. React로 client단 로직 구현
+2. React-router를 활용한 SPA 웹을 구현
+3. Material-ui를 사용해 스타일링
+4. Netlify 플랫폼을 이용해 Client 배포
 
-6. react-file-base64
+- Back
 
-- 64비트 이진 데이터로 이미지를 DB에 저장하기 위해 사용. multer를 이용했었지만 DB에 저장하고 불러오는 것을 구현하는 것이 까다로워 선택했다.
+1. Node.js Express를 이용한 서버 구축
+2. Mongo DB mongoose를 이용해 데이터베이스 사용
+3. Passport js를 이용한 로그인, 회원가입, 인증 구현
+4. Heroku 플랫폼으로 Server 배포
 
-7. Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+---
 
-- https://developers.google.com/web/updates/2017/09/abortable-fetch
+## 프로젝트 구성
 
-8. 시간차 렌더링을 위해 Suspense 컴포넌트가 리액트에서 지원되지만, 아직 실험단계라 따로 Timeout을 줘 구현했다.
-9. Access to XMLHttpRequest at '서버URL 주소' from origin 'Client주소' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+#### Client
 
--
+- 폴더구조
 
-10. 노드 서버 PayloadTooLargeError: request entity too large 에러 문제
+```bash
+├─api
+│
+├─components
+│  ├─DetailUserPage
+│  ├─FormPage
+│  ├─LandingPage
+│  ├─LoginPage
+│  ├─Navigation
+│  ├─Posts
+│  │  ├─Post
+│  ├─RegisterPage        
+├─hoc
 
-- app.use(bodyParser.json({limit: '50mb'}));
-  app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-  다음과 같이 limit를 사용해 용량을 설정해주는 방식으로 해결.
-  https://stackoverflow.com/questions/19917401/error-request-entity-too-large
+```
+각 컴포넌트, API, 그리고 기타 여러 파일들로 폴더 구조를 정리해 클라이언트 코드 가독성을 높이고 유지보수 용이하도록 만들었습니다.
 
-11. CSP(Content Security Policy) 문제...favicon.ico 이미지를 사용하지 않는데 이런 오류가 떠서 방법을 찾아봄
 
-- 서버를 heroku에 배포한 후, 이런 문제가 발생함..
-- Helmet 패키지를 이용해 보안 설정해준다.(되지 않음)
-- var favicon = require('serve-favicon');
-  var path = require('path');
-  app.use(favicon(path.join(\_\_\_dirname, 'public', 'favicon.ico')));
-  이렇게 하니 경로가 '/app/public/favicon.ico'로 나타나면 파일이 없다고 한다.
+- React-router
 
-- app.get('/favicon.ico', (req, res) => res.sendStatus(204));
-  이렇게 204메세지로 전달하도록 했는데, 처음 상태 에러로 돌아감..하..
+```JAVASCRIPT
+ <div className="App">
+     <BrowserRouter>
+       <Switch>
+         <Route exact path='/' component={LandingPage} />
+         <PrivateRoute path='/form' component={FormPage} />
+         <Route path='/login' component={LoginPage} />
+         <Route path='/register' component={RegisterPage} />
+         <PrivateRoute path='/detail' component={DetailUserPage} />
+         <Route path='/Postdetail/:postId' component={DeatilPostPage} />
+       </Switch>
+     </BrowserRouter>
+   </div>
 
-12. 몽구스 IP 연결 에러 - IP를 0.0.0.0/0 으로 설정해 어디서든 접근 가능토록 함
-13. netlify 배포에서 페이지 리로드를 하면 url을 못 찾는 에러가 발생 - 문서에서 소개된대로 public 폴더에 \_redirects 파일을 생성해 설정해줘 해결함
+```
+
+라우터를 이용해 SPA형태의 웹을 구성하고자 했습니다. PrivateRoute를 만들어 사용자 인증 여부에 따라 접근 권한 페이지를 다르게 설정하도록 만들었습니다. 인증이 되지 않은 유저가 접근하면 로그인을 하도록 유도하고, 인증이 된 유저는 허용하도록 구현했습니다.
+
+```JAVASCRIPT
+
+function PrivateRoute({ component: Component, ...rest }) {
+  const isAuthenticated = window.localStorage.getItem('isAuthenticated');
+  return (
+    <Route {...rest} render={(props) => isAuthenticated ? (
+      <Component {...props} />
+    ) : (
+        <Redirect to={{
+          pathname: '/login',
+          state: { from: props.location }
+        }} />
+      )}
+    />
+  );
+}
+
+```
+
+- Axios
+
+```JAVASCRIPT
+
+export const usesrLogin = async (loginData) => {
+  try {
+    return await axios({
+      method: "POST",
+      data: loginData,
+      withCredentials: true,
+      url: `${USER_SERVER}/login`,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+```
+
+처음 개발 단계에서는 위의 코드처럼 axios 옵션 값들 명시적으로 작성하지 않고, 일반적으로 사용하는 방법인 axios(url, [options]) 형태로 서버에 요청했습니다.
+이 과정에서 Express와 Passport 단에서 Access-Control-Allow-Credentials 문제가 발생해 해결책으로 위의 코드처럼 명시적으로 credential 옵션을 true로 설정해줘 문제를 해결했습니다.
+
+- base64
+64비트 이진 데이터로 이미지를 DB에 저장하기 위해 사용하는 라이브러리. multer를 이용했었지만 DB에 저장하고 불러오는 것을 구현하는 것이 까다로워 선택했습니다.
+
+#### Server
+
+- 폴더구조
+
+```bash
+├─config
+│  ├─dev.js
+│  ├─key.js
+│  ├─passport-config.js
+│  ├─prod.js
+├─controllers
+│  ├─auth.js
+│  ├─posts.js
+│  ├─users.js
+├─models
+│  ├─PostMessage.js
+│  ├─User.js
+├─routes
+│  ├─posts.js
+│  ├─users.js
+├─index.js
+
+```
+
+서버 영역에서 설정, 라우팅, 로직, DB모델로 폴더를 세분화해 깔끔하고 가독성을 높여 추후에 리팩토링 과정, 유지보수에 용이하도록 구성했습니다.
+
+
+## 문제점 해결
+###### 1. CORS 에러 문제
+Access-Control-Allow-Origin 문제가 가장 많이 발생했는데 이것을 해결하고자 정말 많은 검색을 했고, npm cors 패키지를 이용해 CORS 에러를 방지했습니다. 서버와 클라이언트 간 통신을 잘 되더라도 DB에서 데이터를 못 받아오는 경우에도 종종 발생해 해결하는데 어려움을 겪었던 문제입니다.
+
+###### 2. 리액트 'Can't perform a React state update on an unmounted component.' 에러
+이 문제는 주로 useEffect 훅 내부에서 API를 호출해 데이터를 받아 내는 로직에서 많이 발생했습니다. 다음과 같이 clena up 함수를 활용해 정리를 해줘 문제를 해결했습니다.
+
+```JAVASCRIPT
+
+useEffect(() => {
+    let mounted = true;
+    api.getUserPosts(userName).then((res) => {
+      if (mounted) {
+        setMyPosts(res.data);
+      }
+    });
+
+    return function cleanup() {
+      mounted = false;
+    }
+  }, []);
+  
+```  
+
+###### 3. 서버 PayloadTooLargeError: request entity too large 에러
+다음과 같이 limit를 사용해 용량을 설정해주는 방식으로 해결.
+
+```JAVASCRIPT
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+```  
+참조: https://stackoverflow.com/questions/19917401/error-request-entity-too-large
+
+
+###### 4. CSP(Content Security Policy)
+Heroku에 서버 배포 과정에서 favicon 관련 CSP 문제가 계속 발생했습니다. 
+문제를 해결하고자
+- Helmet 패키지 사용해 보안 설정(but, 해결되지 않음)
+- app.get('/favicon.ico', (req, res) => res.status(204).end())
+서버에 위와 같이 설정해 강제로 204상태를 보내도록 했고, 클라이언트 주소로 origin을 설정하니 문제가 해결됐습니다. 이 문제 해결을 통해 새로운 보안 문제에 대해 알게 됐습니다.
+
+
+## 배운 점
+
+- 보안적인 문제에 대해 많은 고민을 해야한다는 것을 알게 됐습니다.
+- 배포를 직접 해보면서 로컬 환경에서 개발하는 것과는 또 다른 많은 변수들을 생각해야 한다는 것을 알게 됐습니다.
+- 웹 속도가 느린 것을 해결하기에는 아직 공부가 부족합니다. 그래서 데이터베이스와 서버 최적화에 대해 공부해 다음 프로젝트에 활요할 것입니다.
+
+## 느낀 점
+ 처음으로 서버와 클라이언트 단을 연동해 배포까지 해보면서 정말 다양한 공부를 하게 됐고, 또 많은 것을 알게 된 프로젝트입니다. 프로젝트를 통해 서버, 데이터베이스, 네트워크 보안 쪽에 많은 공부를 해야한다고 느꼈습니다. 비록 많이 부족하고 미숙하지만 개발 공부를 하면서 굉장히 재밌었고, 처음 공부를 시작했을 때를 생각하면 지금은 정말 생각지도 못한 성장을 이뤄낸 제 모습이 정말 뿌듯합니다. 앞으로 더 많은 개발 공부를 통해 더 성장한 개발자로 나아가는 것이 목표입니다.
+
