@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory, Redirect } from 'react-router-dom';
+import { useNavigate, Redirect, Route } from 'react-router-dom';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Avatar, Button, CssBaseline, TextField, Typography, Container, Link } from '@material-ui/core';
@@ -11,12 +11,12 @@ function LoginPage() {
   const classes = useStyles();
   const [loginData, setLoginData] = useState({ email: '', password: '' });
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const isAuthenticated = window.localStorage.getItem('isAuthenticated');
 
   const handlePage = (e) => {
     e.preventDefault();
-    history.push('/register');
+    navigate('/register');
   }
 
   const handlerLogin = async (e) => {
@@ -30,7 +30,7 @@ function LoginPage() {
           window.localStorage.setItem('isAuthenticated', isAuthenticated);
           window.localStorage.setItem('userName', res.data.name);
 
-          history.push('/', { user: res.data });
+          navigate('/', { user: res.data });
         } else {
           alert('아이디 혹은 비밀번호가 잘못 됐습니다.');
         }
@@ -39,7 +39,7 @@ function LoginPage() {
 
 
   if (isAuthenticated) {
-    return <Redirect to='/' />
+    return <Route to='/' />
   } else {
     return (
       <Container component="main" maxWidth="xs" className={classes.layout}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TextField, Button, Container, Paper, Typography } from '@material-ui/core';
 import axios from 'axios';
 import FileBase from 'react-file-base64';
@@ -12,7 +12,7 @@ function Form() {
   const userName = window.localStorage.getItem('userName');
 
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [writeMode, setWriteMode] = useState("");
   const [postData, setpostData] = useState({ creator: userName, title: '', message: '', tags: '', selectedFile: '' });
@@ -39,7 +39,7 @@ function Form() {
     alert('카드가 작성되었습니다..잠시만 기다려주세요!');
     await api.createPost(postData);
 
-    history.push('/');
+    navigate('/');
 
   }
 
@@ -48,7 +48,7 @@ function Form() {
 
     alert('카드가 업데이트 되었습니다..잠시만 기다려주세요!');
     await api.updatePost(postData._id, postData);
-    history.push('/detail', { user: userName });
+    navigate('/detail', { user: userName });
   }
 
   const clear = () => {

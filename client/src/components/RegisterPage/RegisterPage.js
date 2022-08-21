@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import useStyles from './styles';
 import { Avatar, Button, CssBaseline, TextField, Typography, Container } from '@material-ui/core';
@@ -12,7 +12,7 @@ export default function RegisterPage() {
   const classes = useStyles();
   const [inputData, setInputData] = useState({ name: '', email: '', password: '' });
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handlerRegister = async (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ export default function RegisterPage() {
       .then((res) => {
         if (res.status === 200) {
           alert('Register Success!');
-          history.push('/');
+          navigate('/');
         } else {
           alert('Register Failed');
           setInputData({ name: '', email: '', password: '' });

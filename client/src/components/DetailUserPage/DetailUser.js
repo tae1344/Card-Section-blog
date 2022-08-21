@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
-
+import {useLocation, useNavigate } from 'react-router-dom';
 import { Grid, CircularProgress, Container, AppBar, Typography, Toolbar, CssBaseline, Button } from '@material-ui/core';
 
 import Post from '../Posts/Post/Post';
@@ -13,7 +12,7 @@ export default function DetailUser() {
   const [myposts, setMyPosts] = useState([]);
   const [checkPosts, setCheckPosts] = useState(true);
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const userName = location.state !== undefined ? location.state.user : "";
 
   // Error: Can't perform a React state update on an unmounted component 해결책
@@ -59,7 +58,7 @@ export default function DetailUser() {
             작성한 카드가 없네요..
             </Typography>
           <Typography component="h1" variant="h4" align="center" color="textSecondary" gutterBottom>
-            <Button onClick={() => history.push('/form')} variant="outlined" color="secondary">카드 만들러 가기..</Button>
+            <Button onClick={() => navigate('/form')} variant="outlined" color="secondary">카드 만들러 가기..</Button>
           </Typography>
         </Container>
       )

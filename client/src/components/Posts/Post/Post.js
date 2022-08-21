@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Button, Typography, CardActions } from '@material-ui/core';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -11,7 +11,7 @@ import useStyles from './styles';
 
 export default function Post({ post, check, userName }) {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [likeCount, setLikeCount] = useState(post.likeCount);
   const [likeColor, setLikeColor] = useState(false);
@@ -19,13 +19,13 @@ export default function Post({ post, check, userName }) {
 
   const handlePostDetailPage = (e) => {
     e.preventDefault();
-    history.push(`/postDetail/${post._id}`, { post: post });
+    navigate(`/postDetail/${post._id}`, { post: post });
   }
 
 
   const handlerUpdate = (e) => {
     e.preventDefault();
-    history.push('/form', { mode: 'update', postData: post });
+    navigate('/form', { mode: 'update', postData: post });
 
   }
 

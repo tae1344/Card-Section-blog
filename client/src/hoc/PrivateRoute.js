@@ -1,7 +1,7 @@
 // 인증 여부에 따른 라우팅을 위한 페이지
 
 import React from 'react';
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 
 function PrivateRoute({ component: Component, ...rest }) {
@@ -10,7 +10,7 @@ function PrivateRoute({ component: Component, ...rest }) {
     <Route {...rest} render={(props) => isAuthenticated ? (
       <Component {...props} />
     ) : (
-        <Redirect to={{
+        <Route to={{
           pathname: '/login',
           state: { from: props.location }
         }} />

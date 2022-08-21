@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,22 +10,22 @@ import './Navigation.css';
 
 function Navigation({ userName }) {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const isAuthenticated = window.localStorage.getItem('isAuthenticated');
 
   const handleLoginPage = (e) => {
     e.preventDefault();
-    history.push('/login');
+    navigate('/login');
   }
 
   const handleDetailPage = (e) => {
     e.preventDefault();
-    history.push('/detail', { user: userName });
+    navigate('/detail', { user: userName });
   }
 
   const handlerForm = (e) => {
     e.preventDefault();
-    history.push('/form', { mode: 'write' });
+    navigate('/form', { mode: 'write' });
   }
 
   const handlerLogout = (e) => {
@@ -36,7 +36,7 @@ function Navigation({ userName }) {
           window.localStorage.removeItem('isAuthenticated'); // 로컬 스토리지 인증정보 삭제
           window.localStorage.removeItem('userName');
           alert('Successed Logout!');
-          history.push('/');
+          navigate('/');
         } else {
           alert('Failed Logout');
 
