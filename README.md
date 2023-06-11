@@ -54,7 +54,7 @@
 │  ├─LoginPage
 │  ├─Navigation
 │  ├─Posts
-│  │  ├─Post
+│  │  ├─PostCard
 │  ├─RegisterPage        
 ├─hoc
 

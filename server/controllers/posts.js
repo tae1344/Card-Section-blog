@@ -7,26 +7,24 @@ const getPosts = async (req, res) => {
   try {
     const postMessages = await PostMessage.find();
 
-
     res.status(200).json(postMessages);
   } catch (error) {
     res.status(404).json({ message: error });
   }
-}
+};
 
 // 유저가 작성한 포스트만 가져오기
 const getUserPosts = async (req, res) => {
   const { user } = req.params;
 
   try {
-    const postMessages = await PostMessage.find({ "creator": user });
-
+    const postMessages = await PostMessage.find({ creator: user });
 
     res.status(200).json(postMessages);
   } catch (error) {
     res.status(404).json({ message: error });
   }
-}
+};
 
 const createPost = async (req, res) => {
   const post = req.body;
@@ -40,7 +38,7 @@ const createPost = async (req, res) => {
   } catch (error) {
     res.status(409).json({ message: error });
   }
-}
+};
 
 const updatePost = async (req, res) => {
   // ex) /posts/123 --> id = 123
@@ -50,10 +48,9 @@ const updatePost = async (req, res) => {
 
   if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
 
-
   const updatePost = await PostMessage.findByIdAndUpdate(_id, { ...post, _id }, { new: true });
   res.json(updatePost);
-}
+};
 
 const deletePost = async (req, res) => {
   const { id } = req.params;
@@ -62,8 +59,8 @@ const deletePost = async (req, res) => {
 
   await PostMessage.findByIdAndRemove(id);
 
-  res.json({ message: 'Post deleted successfully' });
-}
+  res.json({ message: 'PostCard deleted successfully' });
+};
 
 const likePost = async (req, res) => {
   const { id } = req.params;
@@ -74,6 +71,6 @@ const likePost = async (req, res) => {
   const updatePost = await PostMessage.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
 
   res.json(updatePost);
-}
+};
 
 module.exports = { getPosts, createPost, updatePost, deletePost, likePost, getUserPosts };

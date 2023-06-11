@@ -13,7 +13,7 @@ function LandingPage() {
       </header>
       <main>
         <Container maxWidth="md">
-          <Grid container justify="space-between" alignItems="stretch" spacing={3}>
+          <Grid container justifyContent="space-between" alignItems="stretch" spacing={3}>
             <Grid item xs={12}>
               <Posts userName={userName} />
             </Grid>
