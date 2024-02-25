@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import DeleteIcon from '@material-ui/icons/Delete';
-import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
+import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import DeleteIcon from '@mui/icons-material/Delete';
+import LaunchRoundedIcon from '@mui/icons-material/LaunchRounded';
 import moment from 'moment'; // JS 시간 라이브러리(moment.js)
-import * as api from '../../../api/index';
+import * as api from '../../../src/api';
 import useStyles from './styles';
 
 export default function PostCard({ post, check, userName }) {

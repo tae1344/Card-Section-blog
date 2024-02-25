@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { TextField, Button, Container, Paper, Typography } from '@material-ui/core';
+import { TextField, Button, Container, Paper, Typography } from '@mui/material';
 import axios from 'axios';
 import FileBase from 'react-file-base64';
 
-import * as api from '../../api/index';
+import * as api from '../../src/api';
 import useStyles from './styles';
 
 function Form() {

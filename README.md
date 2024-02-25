@@ -146,7 +146,7 @@ export const usesrLogin = async (loginData) => {
 ├─routes
 │  ├─posts.js
 │  ├─users.js
-├─index.js
+├
 
 ```
 

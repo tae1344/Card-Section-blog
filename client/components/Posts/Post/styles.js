@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/material/styles';
 
 export default makeStyles({
   media: {
@@ -55,15 +55,13 @@ export default makeStyles({
     maxHeight: '10%',
     marginRight: 'auto',
     marginLeft: 'auto',
-    borderRadius: 10
+    borderRadius: 10,
   },
   imageBox: {
-    backgroundColor: '#eee'
-
+    backgroundColor: '#eee',
   },
   text: {
     paddingLeft: 20,
     paddingRight: 20,
-  }
-
+  },
 });

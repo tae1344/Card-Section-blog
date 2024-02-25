@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/material/styles';
 
 export default makeStyles((theme) => ({
   mainContainer: {
@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
     backgroundColor: '#fff',
     color: 'black',
     flexDirection: 'row',
-    alignContent: 'space-between'
+    alignContent: 'space-between',
   },
   icon: {
     marginRight: theme.spacing(2),

@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useStyles from './styles';
-import { Avatar, Button, CssBaseline, TextField, Typography, Container } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Avatar, Button, CssBaseline, TextField, Typography, Container } from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import * as api from '../../api/index';
+import * as api from '../../src/api';
 
 export default function RegisterPage() {
   const classes = useStyles();
@@ -16,16 +16,15 @@ export default function RegisterPage() {
 
   const handlerRegister = async (e) => {
     e.preventDefault();
-    await api.userResiter(inputData)
-      .then((res) => {
-        if (res.status === 200) {
-          alert('Register Success!');
-          navigate('/');
-        } else {
-          alert('Register Failed');
-          setInputData({ name: '', email: '', password: '' });
-        }
-      });
+    await api.userResiter(inputData).then((res) => {
+      if (res.status === 200) {
+        alert('Register Success!');
+        navigate('/');
+      } else {
+        alert('Register Failed');
+        setInputData({ name: '', email: '', password: '' });
+      }
+    });
   };
 
   return (
@@ -75,17 +74,11 @@ export default function RegisterPage() {
             autoComplete="current-password"
             onChange={(e) => setInputData({ ...inputData, password: e.target.value })}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+          <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             가입하기
           </Button>
         </form>
       </div>
     </Container>
-  )
+  );
 }

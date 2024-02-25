@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Grid, CircularProgress, Container, AppBar, Typography, Toolbar, CssBaseline, Button } from '@material-ui/core';
+import { Grid, CircularProgress, Container, AppBar, Typography, Toolbar, CssBaseline, Button } from '@mui/material';
 
 import PostCard from '../Posts/Post/PostCard';
-import * as api from '../../api/index';
+import * as api from '../../src/api';
 
 import useStyles from './styles';
 
