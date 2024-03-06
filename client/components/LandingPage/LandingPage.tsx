@@ -1,6 +1,5 @@
 import React from 'react';
-import Navigation from '../Navigation/Navigation';
-import { Container, Grid } from '@mui/material';
+import Navigation from '../navigation/Navigation';
 import Posts from '../Posts/Posts';
 
 function LandingPage() {
@@ -9,17 +8,9 @@ function LandingPage() {
   return (
     <div>
       <header>
-        <Navigation userName={'kim'} />
+        <Navigation userName={'tae'} />
       </header>
-      <main>
-        <Container maxWidth="md">
-          {/*<Grid container justifyContent="space-between" alignItems="stretch" spacing={3}>*/}
-          {/*  <Grid item xs={12}>*/}
-          {/*    /!*<Posts userName={userName} />*!/*/}
-          {/*  </Grid>*/}
-          {/*</Grid>*/}
-        </Container>
-      </main>
+      <main></main>
     </div>
   );
 }

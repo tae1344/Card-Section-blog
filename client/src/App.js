@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginPage from '../components/LoginPage/LoginPage';
 
 import RegisterPage from '../components/RegisterPage/RegisterPage';
-import FormPage from '../components/FormPage/Form';
+import FormPage from '../components/form/Form';
 import DetailUserPage from '../components/DetailUserPage/DetailUser';
 import DeatilPostPage from '../components/Posts/Post/PostDetail';
 import PrivateRoute from './hoc/PrivateRoute';
