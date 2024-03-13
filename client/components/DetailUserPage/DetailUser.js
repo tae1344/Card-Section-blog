@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Grid, CircularProgress, Container, AppBar, Typography, Toolbar, CssBaseline, Button } from '@mui/material';
 
 import PostCard from '../Posts/Post/PostCard';
-import * as api from '../../src/api';
+import * as api from '../../api';
 
 import useStyles from './styles';
 

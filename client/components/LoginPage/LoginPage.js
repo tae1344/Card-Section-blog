@@ -5,7 +5,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Button, CssBaseline, TextField, Typography, Container, Link } from '@mui/material';
 import useStyles from './styles';
 
-import * as api from '../../src/api';
+import * as api from '../../api';
 
 function LoginPage() {
   const classes = useStyles();

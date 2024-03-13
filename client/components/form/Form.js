@@ -4,7 +4,7 @@ import { TextField, Button, Container, Paper, Typography } from '@mui/material';
 import axios from 'axios';
 import FileBase from 'react-file-base64';
 
-import * as api from '../../src/api';
+import * as api from '../../api';
 import useStyles from './styles';
 
 function Form() {

@@ -5,7 +5,7 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LaunchRoundedIcon from '@mui/icons-material/LaunchRounded';
 import moment from 'moment'; // JS 시간 라이브러리(moment.js)
-import * as api from '../../../src/api';
+import * as api from '../../../api';
 import useStyles from './styles';
 
 export default function PostCard({ post, check, userName }) {

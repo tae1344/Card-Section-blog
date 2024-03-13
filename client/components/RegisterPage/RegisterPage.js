@@ -6,7 +6,7 @@ import useStyles from './styles';
 import { Avatar, Button, CssBaseline, TextField, Typography, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import * as api from '../../src/api';
+import * as api from '../../api';
 
 export default function RegisterPage() {
   const classes = useStyles();

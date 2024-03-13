@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import * as api from '../../src/api';
+import * as api from '../../api';
 import { cn } from '../../lib/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -70,7 +70,7 @@ function Navigation({ userName }) {
             <div className={cn('flex items-center  bg-gray-300')}>
               <Link
                 href={{
-                  pathname: '/form',
+                  pathname: '/post',
                   query: { mode: 'write' },
                 }}
                 className={cn('size-7 mr-2')}
